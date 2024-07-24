@@ -198,6 +198,8 @@ const playerCreate = async (
 };
 
 const playerDestroy = async (player: any, playerMode: string) => {
+  // 选集时，有时会触发autoplaynext跳到选中的下几集
+  await offPlayerTimeUpdate(player, playerMode);
   const playerModule = await loadPlayerMethod(playerMode);
   const { destroy } = playerModule;
   if (playerModulesCache[playerMode]) delete playerModulesCache[playerMode];
